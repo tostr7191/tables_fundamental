@@ -1,0 +1,39 @@
+\documentclass{slides}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage[a4paper,landscape,margin=1cm]{geometry}
+\usepackage{tabularx}
+\renewcommand{\arraystretch}{1.3}
+
+
+
+
+\begin{document}
+\begin{slide}
+\thispagestyle{empty}
+
+\begin{center}
+  \LARGE
+  Minimum Gas Reserves
+\end{center}
+
+\LARGE
+%\rowcolors{1}{}{gray!10}
+\begin{tabularx}{\textwidth}{X|XXXXX}
+  \toprule
+  \emph{Depth}  & \multicolumn{2}{l}{\emph{Liters ($\ell$)}} & \multicolumn{2}{l}{\small{assuming 20$\frac{\ell}{min}$ per diver}}   \\ \midrule
+                & $10\ell$   & $11\ell$   & $12\ell$   & $15\ell$   & $24\ell$ \\
+  \rowcolor{gray!10}
+  $10m$           & 40    & 40    & 40    & 40    & 40  \\
+  $20m$           & 60    & 60    & 50    & 40    & 40  \\
+  \rowcolor{gray!10}
+  $20m$           & 60    & 60    & 50    & 40    & 40  \\
+  $20m$           & 60    & 60    & 50    & 40    & 40  \\
+  \rowcolor{gray!10}
+  $20m$           & 60    & 60    & 50    & 40    & 40  \\
+  $30m$           & 110   & 100   & 100   & 80    & 50  \\ \bottomrule
+  \hline
+\end{tabularx}
+
+\end{slide}
+\end{document}
