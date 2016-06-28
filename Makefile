@@ -1,3 +1,4 @@
+OUTDIR=./pdf/
 # You want latexmk to *always* run, because make does not have all the info.
 # Also, include non-file targets in .PHONY so they are run regardless of any
 # file of the given name existing.
@@ -30,7 +31,8 @@ all:	reserve.pdf
 # missing file reference and interactively asking you for an alternative.
 
 reserve.pdf: reserve.tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make reserve.tex
+	latexmk -outdir=$(OUTDIR) -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make reserve.tex
+	latexmk -outdir=$(OUTDIR) -c
 
 clean:
-	latexmk -C
+	latexmk -outdir=$(OUTDIR) -C
