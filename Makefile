@@ -31,8 +31,10 @@ all:	reserve.pdf
 # missing file reference and interactively asking you for an alternative.
 
 reserve.pdf: reserve.tex
+	ruby generate.rb > ./scr.tmp
 	latexmk -outdir=$(OUTDIR) -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make reserve.tex
 	latexmk -outdir=$(OUTDIR) -c
+	rm ./scr.tmp
 
 clean:
 	latexmk -outdir=$(OUTDIR) -C
