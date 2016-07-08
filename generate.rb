@@ -38,7 +38,7 @@ end
 
 
 # minimum gas data calculation
-CSV.open('./csv/minimum_gas.csv', 'wb') do |csv|
+CSV.open('./tmp/minimum_gas.csv', 'wb') do |csv|
   # header, show Number + 'l' or D12 without 'l'
   csv << (liters.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + 'l'}).unshift(nil)
   # convert D## => liters
@@ -50,4 +50,5 @@ CSV.open('./csv/minimum_gas.csv', 'wb') do |csv|
   end
 end
 
-puts $surface_consumption_rate # for getting it into latex
+# puts $surface_consumption_rate # for getting it into latex
+File.write('./tmp/scr.tmp', $surface_consumption_rate)

@@ -24,13 +24,13 @@
     % Header
     \emph{Depth} &
     \multicolumn{2}{l}{\emph{Liters ($l$)}} &
-    \multicolumn{2}{l}{\small{assuming \input{scr.tmp}$\frac{\ell}{min}$ per diver}}\\\midrule
+    \multicolumn{2}{l}{\small{assuming \input{tmp/scr.tmp}$\frac{\ell}{min}$ per diver}}\\\midrule
 
     % Data with liter-subheader
     \csvreader[no head,
-      late after line=\csvifoddrow{\\\rowcolor{white}}{\\\rowcolor{gray!10}},
+      late after line=\csvifoddrow{\\\rowcolor{white}}{\\\rowcolor{gray!20}},
       late after last line=\\\bottomrule\hline]
-      {csv/minimum_gas.csv}{}
+      {tmp/minimum_gas.csv}{}
     % Row spec
     {
       $\csvcoli$ & 
