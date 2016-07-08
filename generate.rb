@@ -8,7 +8,7 @@ $surface_consumption_rate = 20 # in l/min
 liters = [10, 11, 12, 15, 'D12']
 
 # Depths in meters, can be up to seven values.
-depths = [10, 15, 20, 25, 30, 35]
+depths = [10, 15, 20, 25, 30, 40]
 
 ### Should not be changed!
 $minimum_pressure_threshold = 40 # in bar
@@ -40,7 +40,7 @@ end
 # minimum gas data calculation
 CSV.open('./tmp/minimum_gas.csv', 'wb') do |csv|
   # header, show Number + 'l' or D12 without 'l'
-  csv << (liters.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + 'l'}).unshift(nil)
+  csv << (liters.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + '\ell'}).unshift(nil)
   # convert D## => liters
   # i.e. D12 => 24
   #       D7 => 14
