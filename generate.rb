@@ -1,11 +1,11 @@
-require 'csv'
-require 'mathn'
-
 # The SCR used fpr calculations.
-$surface_consumption_rate = 20 # in l/min
+# In liter/minute
+$surface_consumption_rate = 20
 
-# All values in liters, need to be 5
-# If you want less then 5 (or more) you need to change the .tex
+# Define the volume of the tanks you will be using
+# Either as an integer (10, 12, 15, ...)
+# or as a 'double' ('D12', 'D7', ...)
+# (Note the ' ' around D-Entries)
 liters = [10, 11, 12, 15, 'D12']
 
 # Depths in meters, can be up to seven values.
@@ -15,6 +15,9 @@ depths = [10, 15, 20, 25, 30, 40]
 $minimum_pressure_threshold = 40 # in bar
 $ascension_rate = 3 # in m/min
 $time_to_solve_problem = 1 # in min
+
+require 'csv'
+require 'mathn'
 
 def time_to_ascend(depth)
   return (depth/$ascension_rate) + $time_to_solve_problem
