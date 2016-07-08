@@ -1,19 +1,17 @@
 OUTDIR='./pdf'
 task :default => ['gas_reserve.pdf', 'clean']
 
+file "tmp/minimum_gas.csv" => [:intermediate]
+file "tmp/gas_consumption.csv" => [:intermediate]
 
-file "gas_reserve.pdf" => ['gas_reserve.tex', 'tmp/minimum_gas.csv'] do
-  sh "latexmk -outdir=#{OUTDIR} -pdf -pdflatex='pdflatex -interaction=nonstopmode' -use-make gas_reserve.tex"
-  sh "latexmk -outdir=#{OUTDIR} -c"
+file "gas_reserve.pdf" => ['gas_reserve.tex', :intermediate] do
+  sh "latexmk -silent -outdir=#{OUTDIR} -pdf -pdflatex='pdflatex -interaction=nonstopmode' -use-make gas_reserve.tex"
+  sh "latexmk -silent -outdir=#{OUTDIR} -c"
 end
 
 directory 'tmp'
 
-file "tmp/minimum_gas.csv" => ['tmp', 'generate.rb'] do
-  ruby "generate.rb"
-end
-
-file "tmp/gas_consumption.csv" => ['tmp', 'generate.rb'] do
+task :intermediate => ['tmp', 'generate.rb'] do
   ruby "generate.rb"
 end
 
@@ -21,6 +19,6 @@ task :clean do
   rm_rf 'tmp'
 end
 
-task :clean_all do
-  sh "latexmk -outdir=#{OUTDIR} -C"
+task :clean_all => [:clean] do
+  sh "latexmk -silent -outdir=#{OUTDIR} -C"
 end
