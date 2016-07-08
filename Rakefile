@@ -13,6 +13,10 @@ file "tmp/minimum_gas.csv" => ['tmp', 'generate.rb'] do
   ruby "generate.rb"
 end
 
+file "tmp/gas_consumption.csv" => ['tmp', 'generate.rb'] do
+  ruby "generate.rb"
+end
+
 task :clean do
   rm_rf 'tmp'
 end

@@ -1,4 +1,5 @@
 require 'csv'
+require 'mathn'
 
 # The SCR used fpr calculations.
 $surface_consumption_rate = 20 # in l/min
@@ -28,25 +29,44 @@ def minimum_gas(depth)
 end
 
 def minimum_pressure(depth, liter)
-  pressure = minimum_gas(depth) / liter
-  if pressure < $minimum_pressure_threshold
+  min_pressure = minimum_gas(depth) / liter
+  if min_pressure < $minimum_pressure_threshold
     $minimum_pressure_threshold
   else
-    pressure + (10 - (pressure % 10))
+    min_pressure + (10 - (min_pressure % 10))
   end
 end
 
+def gas_consumption(depth, liter)
+  pressure = depth/10 + 1
+  result = ($surface_consumption_rate * pressure * 5) / liter
+  (result / 5).round * 5
+end
 
+
+liters_heading = liters
+liters.map! { |l| l.to_s[0..0] == 'D' ? l[1..-1].to_i * 2 : l}
 # minimum gas data calculation
 CSV.open('./tmp/minimum_gas.csv', 'wb') do |csv|
   # header, show Number + 'l' or D12 without 'l'
-  csv << (liters.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + '\ell'}).unshift(nil)
+  csv << (liters_heading.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + '\ell'}).unshift(nil)
   # convert D## => liters
   # i.e. D12 => 24
   #       D7 => 14
-  liters.map! { |l| l.to_s[0..0] == 'D' ? l[1..-1].to_i * 2 : l}
   depths.each do |d|
     csv << (liters.map { |l| minimum_pressure(d, l) }).unshift(d.to_s + 'm')
+  end
+end
+
+# minimum gas data calculation
+CSV.open('./tmp/gas_consumption.csv', 'wb') do |csv|
+  # header, show Number + 'l' or D12 without 'l'
+  csv << (liters_heading.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + '\ell'}).unshift(nil)
+  # convert D## => liters
+  # i.e. D12 => 24
+  #       D7 => 14
+  depths.each do |d|
+    csv << (liters.map { |l| gas_consumption(d, l) }).unshift(d.to_s + 'm')
   end
 end
 

@@ -44,4 +44,39 @@
   \end{tabularx}
 \end{slide}
 
+% Gas Usage Slide
+\begin{slide}
+  \thispagestyle{empty}
+
+  \LARGE
+  \begin{center}
+    Estimated Gas Consumption\\
+  \end{center}
+
+  \begin{tabularx}{\textwidth}{X|XXXXX}%
+    \toprule
+
+    % Header
+    \emph{Depth} &
+    \multicolumn{2}{l}{\Large\emph{bar per 5 min.}} &
+    \multicolumn{2}{l}{\small{assuming \input{tmp/scr.tmp}$\frac{\ell}{min}$ per diver}}\\\midrule
+
+    % Data with liter-subheader
+    \csvreader[no head,
+      late after line=\csvifoddrow{\\\rowcolor{white}}{\\\rowcolor{gray!20}},
+      late after last line=\\\bottomrule\hline]
+      {tmp/gas_consumption.csv}{}
+    % Row spec
+    {
+      $\csvcoli$ & 
+      \csviffirstrow{$\csvcolii$}{\csvcolii} &
+      \csviffirstrow{$\csvcoliii$}{\csvcoliii} &
+      \csviffirstrow{$\csvcoliv$}{\csvcoliv} &
+      \csviffirstrow{$\csvcolv$}{\csvcolv} &
+      \csviffirstrow{$\csvcolvi$}{\csvcolvi}
+    }
+  \end{tabularx}
+\end{slide}
+
+
 \end{document}
