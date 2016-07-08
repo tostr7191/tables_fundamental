@@ -5,10 +5,10 @@ $surface_consumption_rate = 20 # in l/min
 
 # All values in liters, need to be 5
 # If you want less then 5 (or more) you need to change the .tex
-liters = [10, 11, 12, 15, 24]
+liters = [10, 11, 12, 15, 'D12']
 
 # Depths in meters, can be up to seven values.
-depths = [10, 15, 20, 25, 30, 35, 40]
+depths = [10, 15, 20, 25, 30, 35]
 
 ### Should not be changed!
 $minimum_pressure_threshold = 40 # in bar
@@ -36,9 +36,15 @@ def minimum_pressure(depth, liter)
   end
 end
 
+
 # minimum gas data calculation
 CSV.open('./csv/minimum_gas.csv', 'wb') do |csv|
-  csv << (liters.map { |l| l.to_s + 'l' }).unshift(nil)
+  # header, show Number + 'l' or D12 without 'l'
+  csv << (liters.map { |l| l.to_s[0..0] == 'D' ? l.to_s : l.to_s + 'l'}).unshift(nil)
+  # convert D## => liters
+  # i.e. D12 => 24
+  #       D7 => 14
+  liters.map! { |l| l.to_s[0..0] == 'D' ? l[1..-1].to_i * 2 : l}
   depths.each do |d|
     csv << (liters.map { |l| minimum_pressure(d, l) }).unshift(d.to_s + 'm')
   end
